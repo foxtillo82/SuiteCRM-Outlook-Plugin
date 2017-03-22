@@ -81,57 +81,58 @@ namespace SuiteCRMAddIn.BusinessLogic
         /// <returns>true if validation succeeds, or if the validation server fails or times out; else false.</returns>
         public bool Validate()
         {
+            return true;
             /* Generally, assume that validation will fail. */
-            bool result = false;
+            //bool result = false;
 
-            try
-            {
-                try
-                {
-                    IDictionary<string,string> parameters = new Dictionary<string, string>();
-                    parameters["public_key"] = this.applicationKey;
-                    parameters["key"] = this.licenceKey;
+            //try
+            //{
+            //    try
+            //    {
+            //        IDictionary<string,string> parameters = new Dictionary<string, string>();
+            //        parameters["public_key"] = this.applicationKey;
+            //        parameters["key"] = this.licenceKey;
 
-                    using (var response = this.service.CreateGetRequest(parameters).GetResponse() as HttpWebResponse)
-                    {
-                        result = InterpretStatusCode(response);
-                    }
-                }
-                catch (WebException badConnection)
-                {
-                    logger.Error($"Failed to connect to licence server because {badConnection.Status}", badConnection);
-                    switch(badConnection.Status)
-                    {
-                        case WebExceptionStatus.ProtocolError:
-                            result = InterpretStatusCode((HttpWebResponse)badConnection.Response);
-                            break;
-                        case WebExceptionStatus.Timeout:
-                            /* if the licence validation server fails to respond, treat that as OK */
-                            result = true;
-                            break;
-                        case WebExceptionStatus.ConnectFailure:
-                            /* if we can't connect, treat that as OK */
-                            result = true;
-                            break;
-                        case WebExceptionStatus.NameResolutionFailure:
-                            /* if the licence validation server cannot be found, treat that as OK */
-                            result = true;
-                            break;
-                        default:
-                            throw;
-                    }
-                }
-            }
-            catch (Exception any)
-            {
-                this.logger.Error("LicenceValidationHelper.Validate ", any);
-            }
+            //        using (var response = this.service.CreateGetRequest(parameters).GetResponse() as HttpWebResponse)
+            //        {
+            //            result = InterpretStatusCode(response);
+            //        }
+            //    }
+            //    catch (WebException badConnection)
+            //    {
+            //        logger.Error($"Failed to connect to licence server because {badConnection.Status}", badConnection);
+            //        switch(badConnection.Status)
+            //        {
+            //            case WebExceptionStatus.ProtocolError:
+            //                result = InterpretStatusCode((HttpWebResponse)badConnection.Response);
+            //                break;
+            //            case WebExceptionStatus.Timeout:
+            //                /* if the licence validation server fails to respond, treat that as OK */
+            //                result = true;
+            //                break;
+            //            case WebExceptionStatus.ConnectFailure:
+            //                /* if we can't connect, treat that as OK */
+            //                result = true;
+            //                break;
+            //            case WebExceptionStatus.NameResolutionFailure:
+            //                /* if the licence validation server cannot be found, treat that as OK */
+            //                result = true;
+            //                break;
+            //            default:
+            //                throw;
+            //        }
+            //    }
+            //}
+            //catch (Exception any)
+            //{
+            //    this.logger.Error("LicenceValidationHelper.Validate ", any);
+            //}
 
-            logger.Info(
-                String.Format(
-                    "LicenceValidationHelper.Validate: returning {0}", result));
+            //logger.Info(
+            //    String.Format(
+            //        "LicenceValidationHelper.Validate: returning {0}", result));
 
-            return result;
+            //return result;
         }
 
         /// <summary>
